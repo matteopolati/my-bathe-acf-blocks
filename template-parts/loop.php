@@ -1,22 +1,22 @@
 <?php if ( have_posts() ) : ?>
 
-	<ul>
+    <ul>
 
-		<?php while ( have_posts() ) : ?>
-			<?php the_post(); ?>
+        <?php while ( have_posts() ) : ?>
+            <?php the_post(); ?>
 
-			<li>
-				<h1 class="text-2xl font-bold hover:underline">
-					<a href="<?php the_permalink(); ?>">
-						<?php the_title(); ?>
-					</a>
-				</h1>
-				<?php the_content(); ?>
-			</li>
+            <li>
+                <h1 class="text-2xl font-bold hover:underline">
+                    <a href="<?php the_permalink(); ?>">
+                        <?php the_title(); ?>
+                    </a>
+                </h1>
+                <?php the_content(); ?>
+            </li>
 
-		<?php endwhile; ?>
+        <?php endwhile; ?>
 
-	</ul>
+    </ul>
 
-	<?php
+    <?php
 endif;

@@ -7,12 +7,10 @@
 
 ?>
 </main>
-
-	<?php get_sidebar(); ?>
 </div>
 
 <footer class="footer">
-	<p class="copyright">© 2020 the contributors of Bathe under the GPLv2 license.</p>
+	<p class="copyright">© 2026</p>
 </footer>
 
 <?php wp_footer(); ?>

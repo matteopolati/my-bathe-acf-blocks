@@ -126,3 +126,136 @@ add_action(
 );
 
 require get_template_directory() . '/acf-blocks/acf-blocks.php';
+add_filter(
+	'nav_menu_css_class',
+	function ( $classes, $item, $args ) {
+		if ( ! isset( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+			return $classes;
+		}
+
+		$classes[] = 'menu-item';
+		$classes[] = 'relative';
+
+		if ( in_array( 'menu-item-has-children', $classes, true ) ) {
+			$classes[] = 'group';
+		}
+
+		return array_unique( $classes );
+	},
+	10,
+	3
+);
+
+add_filter(
+	'nav_menu_link_attributes',
+	function ( $atts, $item, $args ) {
+		if ( ! isset( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+			return $atts;
+		}
+
+		$link_classes = 'block rounded-md px-3 py-2 text-sm font-medium text-slate-800 transition hover:bg-slate-100';
+
+		if ( ! empty( $item->current ) || ! empty( $item->current_item_ancestor ) ) {
+			$link_classes .= ' bg-slate-100';
+		}
+
+		$atts['class'] = isset( $atts['class'] ) ? trim( $atts['class'] . ' ' . $link_classes ) : $link_classes;
+
+		return $atts;
+	},
+	10,
+	3
+);
+
+add_filter(
+	'nav_menu_submenu_css_class',
+	function ( $classes, $args ) {
+		if ( ! isset( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+			return $classes;
+		}
+
+		return array(
+			'sub-menu',
+			'mt-1',
+			'space-y-1.5',
+			'pl-3',
+			'border-l',
+			'border-slate-200',
+			'lg:invisible',
+			'lg:absolute',
+			'lg:left-0',
+			'lg:top-full',
+			'lg:z-30',
+			'lg:mt-2',
+			'lg:min-w-56',
+			'lg:space-y-1',
+			'lg:rounded-md',
+			'lg:border',
+			'lg:border-slate-200',
+			'lg:bg-white',
+			'lg:p-2',
+			'lg:pl-2',
+			'lg:opacity-0',
+			'lg:shadow-xl',
+			'lg:transition',
+			'lg:duration-150',
+			'lg:group-hover:visible',
+			'lg:group-hover:opacity-100',
+			'lg:group-focus-within:visible',
+			'lg:group-focus-within:opacity-100',
+		);
+	},
+	10,
+	2
+);
+
+/**
+ * Allow SVG uploads in Media Library.
+ */
+add_filter(
+	'upload_mimes',
+	function ( $mimes ) {
+		if ( current_user_can( 'upload_files' ) ) {
+			$mimes['svg']  = 'image/svg+xml';
+			$mimes['svgz'] = 'image/svg+xml';
+		}
+
+		return $mimes;
+	}
+);
+
+add_filter(
+	'wp_check_filetype_and_ext',
+	function ( $data, $file, $filename, $mimes ) {
+		$filetype = wp_check_filetype( $filename, $mimes );
+
+		if ( 'svg' === $filetype['ext'] ) {
+			$data['ext']  = 'svg';
+			$data['type'] = 'image/svg+xml';
+		}
+
+		return $data;
+	},
+	10,
+	4
+);
+
+add_filter(
+	'wp_prepare_attachment_for_js',
+	function ( $response, $attachment ) {
+		if ( 'image/svg+xml' !== get_post_mime_type( $attachment ) ) {
+			return $response;
+		}
+
+		$response['image'] = array(
+			'src' => $response['url'],
+		);
+		$response['thumb'] = array(
+			'src' => $response['url'],
+		);
+
+		return $response;
+	},
+	10,
+	2
+);
