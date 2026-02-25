@@ -1,0 +1,20 @@
+{
+    "name": "acf/test",
+    "title": "Test",
+    "description": "A custom test block that uses ACF fields.",
+    "style": "bathe-block-test",
+    "script": "bathe-block-test",
+    "category": "formatting",
+    "icon": "admin-comments",
+    "keywords": [
+        "test",
+        "example"
+    ],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "test.php"
+    },
+    "supports": {
+        "anchor": true
+    }
+}
