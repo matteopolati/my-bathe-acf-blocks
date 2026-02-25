@@ -9,3 +9,6 @@ You can find the Bathe documentation [on the website](https://ixkaito.github.io/
 ## Copyright / License
 
 © 2020 the contributors of Bathe under the [GPL version 2.0](https://raw.githubusercontent.com/wp-bathe/bathe/master/LICENSE) or later.
+
+## Customization
+Improved Vite compilation with added functionality for ACF Blocks integration.
